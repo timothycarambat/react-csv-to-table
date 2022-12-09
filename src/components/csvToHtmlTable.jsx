@@ -29,7 +29,7 @@ const CsvToHtmlTable = ({
                 <th
                   key={`header-${i}`}
                 >
-                  {typeof renderTitle === "function" ? renderTitle(column, colIdx, rowIdx) : column}
+                  {typeof renderTitle === "function" ? renderTitle(column, i, 0) : column}
                 </th>
               ))
             }
