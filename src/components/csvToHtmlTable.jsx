@@ -10,7 +10,8 @@ const CsvToHtmlTable = ({
   tableColumnClassName,
   rowKey,
   colKey,
-  renderCell
+  renderCell,
+  renderTitle
 }) => {
   const rowsWithColumns = parseCsvToRowsAndColumn(data.trim(), csvDelimiter);
   let headerRow = undefined;
@@ -28,7 +29,7 @@ const CsvToHtmlTable = ({
                 <th
                   key={`header-${i}`}
                 >
-                  {column}
+                  {typeof renderTitle === "function" ? renderTitle(column, colIdx, rowIdx) : column}
                 </th>
               ))
             }
@@ -44,12 +45,12 @@ const CsvToHtmlTable = ({
         <tbody>
           {
             rows.map((row, rowIdx) => (
-              <tr className={tableRowClassName} key={typeof(rowKey) === 'function' ? rowKey(row, rowIdx) : rowIdx}>
+              <tr className={tableRowClassName} key={typeof (rowKey) === 'function' ? rowKey(row, rowIdx) : rowIdx}>
                 {
                   row.map && row.map((column, colIdx) => (
                     <td
                       className={tableColumnClassName}
-                      key={typeof(rowKey) === 'function' ? colKey(row, colIdx, rowIdx) : column[colKey]}
+                      key={typeof (rowKey) === 'function' ? colKey(row, colIdx, rowIdx) : column[colKey]}
                     >
                       {typeof renderCell === "function" ? renderCell(column, colIdx, rowIdx) : column}
                     </td>
